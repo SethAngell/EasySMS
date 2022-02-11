@@ -255,6 +255,10 @@ def get_numbers_from_file():
         
         print("We extracted all available numbers")
         if len(rejects) > 0:
+            if len(rejects) > 10:
+                print(f'During the validation process, {len(rejects)} numbers were found to be invalid. They will not be contacted. These numbers have been saved to ~/Developer/results/rejects/')
+                with open(f'~/Developer/results/rejects/{time.strftime("%Y-%m-%d_%H-%M-%S")}_rejects.txt', 'w') as outfile:
+                    outfile.writelines(rejects)
             print("The following numbers were invalid. Please fix and resubmit just these numbers")
             for number in rejects:
                 print(number)
@@ -263,9 +267,7 @@ def get_numbers_from_file():
 
 def validate_numbers(numbers):
     print(generate_rich("We're almost ready to send out that message!"))
-    print("The following are all the numbers you'll be sending the message to:")
-    for number in numbers:
-        print(number)
+    print(f'This message will be sent to {len(numbers)} numbers')
 
     decision = input("Would you like to move forward with sending your messages? [YES/NO]: ")
 
